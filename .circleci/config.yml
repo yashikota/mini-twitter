@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.0.3
+
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.10.1
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r ./requirements.txt
+
+      - run:
+          name: Create dot env file
+          shell: bash
+          command: |
+            touch .env
+            echo "DISCORD=$DISCORD" >> .env
+            echo "BT=$BT" >> .env
+
+      - run:
+          name: Run main.py
+          command: |
+            python ./main.py
+
+workflows:
+  version: 2
+  ikayaki BOT:
+
+    triggers:
+      - schedule:
+          cron: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *" # 5分ごとに実行(JST)
+          filters:
+            branches:
+              only:
+                - master
+
+    jobs:
+      - build:
+          context: miniAPI
