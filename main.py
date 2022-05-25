@@ -25,7 +25,7 @@ def get_tweets():
     ID = "1419021878115540995"
     tweet_list = list()
 
-    tweets = client.get_users_tweets(id=ID, max_results=20)
+    tweets = client.get_users_tweets(id=ID, max_results=10)
     for tweet in tweets[0]:
         tweet_id = tweet.id
         tweet_url = "https://twitter.com/{}/status/{}".format(ID, tweet_id)
