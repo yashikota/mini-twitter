@@ -37,7 +37,7 @@ workflows:
 
     triggers:
       - schedule:
-          cron: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *" # 5分ごとに実行(JST)
+          cron: "0,10,20,30,40,50 * * * *" # 5分ごとに実行(JST)
           filters:
             branches:
               only:
